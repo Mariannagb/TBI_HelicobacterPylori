@@ -1,0 +1,91 @@
+daniel@inspiron-15-3520:~$ curl -s "https://rest.uniprot.org/uniprotkb/stream?format=fasta&query=proteome:UP000000429" -o input.fasta
+daniel@inspiron-15-3520:~$ ls
+ Android               android-studio      Desktop     Downloads   java_error_in_studio_15813.log   Music      Public       results_epibuilder    snap             Templates   Vídeos
+ android-emulator.sh  'Área de trabalho'   Documents   Imagens     limpa                            Pictures   repository   results_fastprotein   StudioProjects   Videos
+daniel@inspiron-15-3520:~$ cd repository/
+daniel@inspiron-15-3520:~/repository$ curl -s "https://rest.uniprot.org/uniprotkb/stream?format=fasta&query=proteome:UP000000429" -o input.fasta
+daniel@inspiron-15-3520:~/repository$ docker run --rm -v ${PWD}:/data bioinfoufsc/fastprotein:clean-latest fastprotein -i /data/input.fasta -o /data/results_fastprotein
+26/04/07 16:31:21 INFO: #FastProtein Software 1.0
+26/04/07 16:31:21 INFO: #Developed by Bioinformatic Laboratory - UFSC and IFSC
+26/04/07 16:31:21 INFO: #An automated pipeline for proteomic profile analysis
+26/04/07 16:31:21 INFO: #Questions and issues: renato.simoes@ifsc.edu.br
+26/04/07 16:31:21 INFO: #See more about the project at https://github.com/bioinformatics-ufsc/FastProtein
+26/04/07 16:31:21 INFO: 
+26/04/07 16:31:21 INFO: Process started time: Tue Apr 07 16:31:21 UTC 2026
+26/04/07 16:31:21 INFO: Temporary output folder: /FastProtein/temp/e91e2d53-c649-4518-b6f0-6a33b9566ee5
+26/04/07 16:31:21 INFO: Final output folder: /data/results_fastprotein
+26/04/07 16:31:21 INFO: 
+26/04/07 16:31:21 INFO: Proteins in FASTA: 1554
+26/04/07 16:31:21 INFO: Proteins viable for analysis: 1543
+26/04/07 16:31:21 INFO: Ignored proteins (contains * or X) : 11
+26/04/07 16:31:21 INFO: Executing ERRet - Search for Endoplasmic Reticulum Retention sites 
+26/04/07 16:31:21 INFO: Executing N-Glyc - Search for N-glycosylation sites
+26/04/07 16:31:21 INFO: Executing WoLFPSORT - Subcellular localization prediction
+26/04/07 16:31:42 INFO: 	External Command time: 21.386S
+26/04/07 16:31:42 INFO: 	     FastProtein time: 0.013S
+26/04/07 16:31:42 INFO: 	           Total time: 21.399S
+26/04/07 16:31:42 INFO: Executing TMHMM-2.0c - Search for transmembrane domains
+26/04/07 16:32:13 INFO: 	External Command time: 30.372S
+26/04/07 16:32:13 INFO: 	     FastProtein time: 0.012S
+26/04/07 16:32:13 INFO: 	           Total time: 30.384S
+26/04/07 16:32:13 INFO: Executing SignalP-5 - Search for signal peptide
+26/04/07 16:32:29 INFO: 	External Command time: 16.366S
+26/04/07 16:32:29 INFO: 	     FastProtein time: 0.041S
+26/04/07 16:32:29 INFO: 	           Total time: 16.407S
+26/04/07 16:32:29 INFO: Executing PredGPI - Search for Glycosylphosphatidylinositol (GPI) domain
+26/04/07 16:32:39 INFO: 	External Command time: 9.953S
+26/04/07 16:32:39 INFO: 	     FastProtein time: 0.01S
+26/04/07 16:32:39 INFO: 	           Total time: 9.963S
+26/04/07 16:32:39 INFO: Executing Phobius - Search for signal peptide and transmembrane domains
+26/04/07 16:33:20 INFO: 	External Command time: 41.224S
+26/04/07 16:33:20 INFO: 	     FastProtein time: 0.017S
+26/04/07 16:33:20 INFO: 	           Total time: 41.241S
+26/04/07 16:33:20 INFO: Skipping - InterproScan
+26/04/07 16:33:20 INFO: Skipping - Search for similarity
+26/04/07 16:33:21 INFO: Creating output files: .CSV
+26/04/07 16:33:22 INFO: Creating output files: .TSV
+26/04/07 16:33:22 INFO: Creating output files: .TXT
+26/04/07 16:33:22 INFO: Creating output files: .SEP
+26/04/07 16:33:22 INFO: Creating Charts
+26/04/07 16:33:23 INFO: Creating ODF (Open Document Format) file 
+26/04/07 16:33:24 INFO: Creating XLS (Excel Spreadsheet) file
+26/04/07 16:33:24 INFO: 
+26/04/07 16:33:24 INFO: Processed proteins: 1543
+26/04/07 16:33:24 INFO: Process started at: Tue Apr 07 16:31:21 UTC 2026
+26/04/07 16:33:24 INFO: Process ended at: Tue Apr 07 16:33:24 UTC 2026
+26/04/07 16:33:24 INFO: General processing time
+26/04/07 16:33:24 INFO: 	External Command time: 1M59.301S
+26/04/07 16:33:24 INFO: 	     FastProtein time: 4.162S
+26/04/07 16:33:24 INFO: 	           Total time: 2M3.463S
+26/04/07 16:33:24 INFO: Check out your generated files in /data/results_fastprotein
+26/04/07 16:33:24 INFO: Thank you for using FastProtein, we hope it will be useful for your research. Please, cite us!
+26/04/07 16:33:24 INFO: 
+Moreira RS, Benetti Filho V, Maia GA, Soratto TAT, Kawagoe EK, Russi BC, Miletti LC, Wagner G. 2024.
+26/04/07 16:33:24 INFO: FastProtein???an automated software for in silico proteomic analysis.
+26/04/07 16:33:24 INFO: PeerJ 12:e18309 https://doi.org/10.7717/peerj.18309
+daniel@inspiron-15-3520:~/repository$ awk '/^>/{c++} c<=50' results_fastprotein/raw/membranes.fasta > top50.fasta
+daniel@inspiron-15-3520:~/repository$ docker run -it --rm         -v ${PWD}:/data/         -v /var/run/docker.sock:/var/run/docker.sock         -v epibuilder-data:/tmp/epibuilder         -e EPIBUILDER_VOLUME=epibuilder-data         bioinfoufsc/epibuilder-core epibuilder         --input_file /data/top50.fasta         --loc gram_neg         --output /data/results_epibuilder
+Nextflow 25.10.4 is available - Please consider updating your version to it
+
+ N E X T F L O W   ~  version 25.10.0
+
+Launching `/epibuilder/pipeline/main.nf` [crazy_bhaskara] DSL2 - revision: 196aef9071
+
+WARN: Access to undefined parameter `minLength` -- Initialise it to a default value eg. `params.minLength = some_value`
+WARN: Access to undefined parameter `maxLength` -- Initialise it to a default value eg. `params.maxLength = some_value`
+WARN: Access to undefined parameter `threshold` -- Initialise it to a default value eg. `params.threshold = some_value`
+WARN: Access to undefined parameter `proteomes` -- Initialise it to a default value eg. `params.proteomes = some_value`
+Output directory already exists: /data/results_epibuilder
+executor >  local (5)
+[1b/6a0a29] process > validate_fasta (validate_fasta)     [100%] 1 of 1 ✔
+[85/6edc9a] process > run_bepipred (bepipred)             [100%] 1 of 1 ✔
+[b9/1b319c] process > run_localization (run_localization) [100%] 1 of 1 ✔
+[92/df6d76] process > run_epibuilder (epibuilder)         [100%] 1 of 1 ✔
+[6f/eacc0f] process > export_excel (export_excel)         [100%] 1 of 1 ✔
+Completed at: 07-Apr-2026 13:41:05
+Duration    : 6m 50s
+CPU hours   : 0.1
+Succeeded   : 5
+
+WARN: Graphviz is required to render the execution DAG in the given format -- See http://www.graphviz.org for more info.
+WARN: Failed to render execution report -- see the log file for details
